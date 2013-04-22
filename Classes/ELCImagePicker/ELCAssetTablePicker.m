@@ -32,12 +32,12 @@
 
     NSMutableArray *tempArray = [[NSMutableArray alloc] init];
     self.elcAssets = tempArray;
-    [tempArray release];
+
 	
     if (self.immediateReturn) {
         
     } else {
-        UIBarButtonItem *doneButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneAction:)] autorelease];
+        UIBarButtonItem *doneButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneAction:)] ;
         [self.navigationItem setRightBarButtonItem:doneButtonItem];
         [self.navigationItem setTitle:@"Loading..."];
     }
@@ -65,7 +65,7 @@
 
 - (void)preparePhotos
 {
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+
 
     NSLog(@"enumerating photos");
     [self.assetGroup enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
@@ -77,7 +77,7 @@
         ELCAsset *elcAsset = [[ELCAsset alloc] initWithAsset:result];
         [elcAsset setParent:self];
         [self.elcAssets addObject:elcAsset];
-        [elcAsset release];
+
      }];
     NSLog(@"done enumerating photos");
     
@@ -97,13 +97,13 @@
         [self.navigationItem setTitle:self.singleSelection ? @"Pick Photo" : @"Pick Photos"];
     });
     
-    [pool release];
+
 
 }
 
 - (void)doneAction:(id)sender
 {	
-	NSMutableArray *selectedAssetsImages = [[[NSMutableArray alloc] init] autorelease];
+	NSMutableArray *selectedAssetsImages = [[NSMutableArray alloc] init];
 	    
 	for(ELCAsset *elcAsset in self.elcAssets) {
 
@@ -161,7 +161,7 @@
     ELCAssetCell *cell = (ELCAssetCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 
     if (cell == nil) {		        
-        cell = [[[ELCAssetCell alloc] initWithAssets:[self assetsForIndexPath:indexPath] reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[ELCAssetCell alloc] initWithAssets:[self assetsForIndexPath:indexPath] reuseIdentifier:CellIdentifier] ;
 
     } else {		
 		[cell setAssets:[self assetsForIndexPath:indexPath]];
@@ -188,12 +188,6 @@
     return count;
 }
 
-- (void)dealloc 
-{
-    [_assetGroup release];    
-    [_elcAssets release];
-    [_selectedAssetsLabel release];
-    [super dealloc];    
-}
+
 
 @end

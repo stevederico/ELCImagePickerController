@@ -25,7 +25,7 @@
 
 - (void)selectedAssets:(NSArray *)assets
 {
-	NSMutableArray *returnArray = [[[NSMutableArray alloc] init] autorelease];
+	NSMutableArray *returnArray = [[NSMutableArray alloc] init] ;
 	
 	for(ALAsset *asset in assets) {
 
@@ -42,7 +42,7 @@
 		
 		[returnArray addObject:workingDictionary];
 		
-		[workingDictionary release];	
+	
 	}    
 	if(_myDelegate != nil && [_myDelegate respondsToSelector:@selector(elcImagePickerController:didFinishPickingMediaWithInfo:)]) {
 		[_myDelegate performSelector:@selector(elcImagePickerController:didFinishPickingMediaWithInfo:) withObject:self withObject:[NSArray arrayWithArray:returnArray]];
@@ -75,10 +75,6 @@
 }
 
 
-- (void)dealloc
-{
-    NSLog(@"deallocing ELCImagePickerController");
-    [super dealloc];
-}
+
 
 @end

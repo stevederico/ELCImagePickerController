@@ -11,7 +11,7 @@
 
 @interface ELCAlbumPickerController ()
 
-@property (nonatomic, retain) ALAssetsLibrary *library;
+@property (nonatomic, strong) ALAssetsLibrary *library;
 
 @end
 
@@ -32,20 +32,20 @@
 
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self.parent action:@selector(cancelImagePicker)];
 	[self.navigationItem setRightBarButtonItem:cancelButton];
-	[cancelButton release];
+
 
     NSMutableArray *tempArray = [[NSMutableArray alloc] init];
 	self.assetGroups = tempArray;
-    [tempArray release];
+
     
     ALAssetsLibrary *assetLibrary = [[ALAssetsLibrary alloc] init];
     self.library = assetLibrary;
-    [assetLibrary release];
+
 
     // Load Albums into assetGroups
     dispatch_async(dispatch_get_main_queue(), ^
     {
-        NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+
         
         // Group enumerator Block
         void (^assetGroupEnumerator)(ALAssetsGroup *, BOOL *) = ^(ALAssetsGroup *group, BOOL *stop) 
@@ -74,7 +74,7 @@
             
             UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"Album Error: %@ - %@", [error localizedDescription], [error localizedRecoverySuggestion]] delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
             [alert show];
-            [alert release];
+
             
             NSLog(@"A problem occured %@", [error description]);	                                 
         };	
@@ -84,7 +84,7 @@
                                usingBlock:assetGroupEnumerator 
                              failureBlock:assetGroupEnumberatorFailure];
         
-        [pool release];
+
     });    
 }
 
@@ -121,7 +121,7 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] ;
     }
     
     // Get count
@@ -148,7 +148,7 @@
     [picker.assetGroup setAssetsFilter:[ALAssetsFilter allPhotos]];
     
 	[self.navigationController pushViewController:picker animated:YES];
-	[picker release];
+
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -171,13 +171,6 @@
     // For example: self.myOutlet = nil;
 }
 
-
-- (void)dealloc 
-{	
-    [_assetGroups release];
-    [_library release];
-    [super dealloc];
-}
 
 @end
 

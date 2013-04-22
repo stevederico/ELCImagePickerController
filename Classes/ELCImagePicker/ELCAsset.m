@@ -40,11 +40,6 @@
     }
 }
 
-- (void)dealloc 
-{    
-    [_asset release];
-    [super dealloc];
-}
 
 @end
 
